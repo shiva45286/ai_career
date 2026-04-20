@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Career AI</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+/* card */
+.card{
+    width:500px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* question */
+.q{
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+/* options */
+.option{
+    padding:15px;
+    margin:10px;
+    border-radius:10px;
+    background:#eee;
+    cursor:pointer;
+}
+
+.option:hover{
+    background:#667eea;
+    color:white;
+}
+
+.option.active{
+    background:#667eea;
+    color:white;
+}
+
+/* button */
+button{
+    width:100%;
+    padding:12px;
+    background:#667eea;
+    color:white;
+    border:none;
+    border-radius:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>🎯 Career Quiz</h2>
+
+<form id="form" action="/predict" method="post">
+
+<div id="q" class="q"></div>
+<div id="ops"></div>
+
+<input type="hidden" name="interest" id="interest">
+<input type="hidden" name="math" id="math">
+<input type="hidden" name="creativity" id="creativity">
+<input type="hidden" name="logic" id="logic">
+
+<br>
+<button type="button" onclick="next()">Next</button>
+
+</form>
+
+</div>
+
+<script>
+let step=0;
+
+const questions=[
+"💻 Do you enjoy technical work?",
+"📊 How strong is your math?",
+"🎨 Are you creative?",
+"🧠 How is your logic?"
+];
+
+const fields=["interest","math","creativity","logic"];
+let ans={};
+
+function load(){
+document.getElementById("q").innerText=questions[step];
+
+let html="";
+for(let i=1;i<=5;i++){
+html+=`<div class="option" onclick="sel(${i},this)">${i}</div>`;
+}
+document.getElementById("ops").innerHTML=html;
+}
+
+function sel(v,e){
+ans[fields[step]]=v;
+document.querySelectorAll(".option").forEach(o=>o.classList.remove("active"));
+e.classList.add("active");
+}
+
+function next(){
+if(!ans[fields[step]]) return alert("Select option");
+
+if(step<3){
+step++;
+load();
+}else{
+document.getElementById("interest").value=ans["interest"];
+document.getElementById("math").value=ans["math"];
+document.getElementById("creativity").value=ans["creativity"];
+document.getElementById("logic").value=ans["logic"];
+
+document.getElementById("form").submit();
+}
+}
+
+load();
+</script>
+
+</body>
+</html>

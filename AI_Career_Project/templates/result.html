@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="hero">
+<h1>{{ result }}</h1>
+<p>{{ explanation }}</p>
+
+<p>Score: {{ score }}%</p>
+
+<div style="background:#ddd;height:10px;">
+<div style="width:{{ score }}%;background:white;height:10px;"></div>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+<h3>Skills</h3>
+{% for s in info.skills %}
+<p>{{ s }}</p>
+{% endfor %}
+</div>
+
+<div class="card">
+<canvas id="chart"></canvas>
+</div>
+
+</div>
+
+<div class="card">
+<h3>Roadmap</h3>
+{% for r in info.roadmap %}
+<p>{{ r }}</p>
+{% endfor %}
+</div>
+
+</div>
+
+<script>
+window.onload=function(){
+let data=[{{i}},{{m}},{{c}},{{l}}];
+
+new Chart(document.getElementById("chart"),{
+type:'bar',
+data:{
+labels:['Interest','Math','Creativity','Logic'],
+datasets:[{data:data}]
+}
+});
+}
+</script>
+
+</body>
+</html>

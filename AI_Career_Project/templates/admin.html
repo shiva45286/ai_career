@@ -1,0 +1,9 @@
+<h2>Admin Dashboard</h2>
+
+<table border="1">
+<tr><th>ID</th><th>Result</th></tr>
+
+{% for row in data %}
+<tr><td>{{row[0]}}</td><td>{{row[5]}}</td></tr>
+{% endfor %}
+</table>
